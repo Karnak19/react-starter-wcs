@@ -1,0 +1,27 @@
+{
+  "name": "react-start-wcs",
+  "version": "1.0.0",
+  "description": "CLI for react app starter",
+  "main": "index.js",
+  "bin": {
+    "react-starter-wcs": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "cli",
+    "codegen"
+  ],
+  "author": "Basile V. <basile64.v@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "chalk": "^4.1.0",
+    "clear": "^0.1.0",
+    "figlet": "^1.5.0",
+    "ora": "^5.0.0",
+    "prompt-checkbox": "^2.2.0"
+  }
+}
