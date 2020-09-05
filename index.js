@@ -3,33 +3,16 @@
 const fs = require("fs");
 const clear = require("clear");
 const ora = require("ora");
-const chalk = require("chalk");
-const Prompt = require("prompt-checkbox");
+const axios = require("axios");
+const mkdirp = require("mkdirp");
+
+const runCommand = require("./runCommand");
+const { promptHeader, promptEnd, depsPrompt, caproverPrompt, ghActionsPrompt } = require("./prompts");
+const downloadGist = require("./downloadGist");
+const dependencies = require("./deps.json");
 
 const repoURL = "https://github.com/Karnak19/react-starter-template.git";
-const runCommand = require("./runCommand");
-const { promptHeader, promptEnd } = require("./prompts");
-
 const name = process.argv[2];
-
-const depsPrompt = new Prompt({
-  name: "packages",
-  message: "Do you want any third-party libraries ? \n(press space to choose, enter to confirm)\n",
-  choices: ["react-router", "redux", "recoil", "prop-types"],
-});
-
-const caproverPrompt = new Prompt({
-  name: "caprover",
-  message: "Do you want Caprover config files ?",
-  radio: true,
-  choices: ["yes"],
-});
-
-const ghActionsPrompt = new Prompt({
-  name: "actions",
-  message: "Do you want any pre-configured Github Actions ?",
-  choices: ["ESLint on PR", "Build and push to a 'production' branch"],
-});
 
 clear();
 
@@ -52,10 +35,12 @@ let spinner;
     const ghActions = await ghActionsPrompt.run();
 
     const datas = {
-      deps: [...deps],
+      deps: deps.flatMap((dep) => {
+        return dependencies[dep].packages ? dependencies[dep].packages : null;
+      }),
       caprover: caprover[0] ? true : false,
       ghActions:
-        ghActions.lenght > 0
+        ghActions.length > 0
           ? ghActions.map((e) => {
               if (e === "ESLint on PR") {
                 return "eslint";
@@ -73,27 +58,74 @@ let spinner;
 
     spinner = ora("Installing dependencies...").start();
 
-    await runCommand("npm", ["install"], {
-      cwd: process.cwd() + "/" + name,
-    });
+    // await runCommand("npm", ["install"], {
+    //   cwd: process.cwd() + "/" + name,
+    // });
 
     if (datas.deps.length > 0) {
-      await runCommand("npm", ["install", datas.deps], {
+      console.log(datas.deps);
+      await runCommand("npm", ["install", ...datas.deps], {
         cwd: process.cwd() + "/" + name,
       });
     }
 
     if (datas.caprover) {
       // Download Caprover files gist
+      const gists = await downloadGist("https://api.github.com/users/Karnak19/gists", [dependencies.caprover.id]);
+
+      const files = gists.flatMap((gist) => {
+        return Object.values(gist).map((val) => {
+          return {
+            promise: axios.get(val.raw_url),
+          };
+        });
+      });
+
+      const res = await Promise.all(files.map((f) => f.promise));
+
+      res.forEach((f) => {
+        if (typeof f.data === "object") {
+          f.data = JSON.stringify(f.data);
+        }
+        filename = f.request.path.split("/")[5];
+        fs.writeFile(`${process.cwd()}/${name}/${filename}`, f.data, (err) => {
+          if (err) throw err;
+        });
+      });
     }
 
     if (datas.ghActions) {
       // Download GH Actions files gist
+      const ids = datas.ghActions.map((e) => {
+        return dependencies[e].id;
+      });
+      const gists = await downloadGist("https://api.github.com/users/Karnak19/gists", ids);
+
+      const files = gists.flatMap((gist) => {
+        return Object.values(gist).map((val) => {
+          return {
+            promise: axios.get(val.raw_url),
+          };
+        });
+      });
+
+      const res = await Promise.all(files.map((f) => f.promise));
+
+      await mkdirp(`${process.cwd()}/${name}/.github/workflows`);
+
+      res.forEach((f) => {
+        filename = f.request.path.split("/")[5];
+        fs.writeFile(`${process.cwd()}/${name}/.github/workflows/${filename}`, f.data, (err) => {
+          if (err) throw err;
+        });
+      });
     }
 
     spinner.stop();
     promptEnd(name);
   } catch (error) {
-    throw new Error(error);
+    spinner.stop();
+    promptEnd(name);
+    console.error(error);
   }
 })();
