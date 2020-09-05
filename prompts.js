@@ -9,7 +9,7 @@ const promptHeader = () =>
       })
     )
   );
-const promptEnd = () => {
+const promptEnd = (name) => {
   colorlog("Success ! 🔥", chalk.green);
   console.log("");
   console.log("");

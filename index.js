@@ -2,15 +2,13 @@
 
 const fs = require("fs");
 const clear = require("clear");
-const figlet = require("figlet");
 const ora = require("ora");
 const chalk = require("chalk");
 const Prompt = require("prompt-checkbox");
-const axios = require("axios");
 
 const repoURL = "https://github.com/Karnak19/react-starter-template.git";
 const runCommand = require("./runCommand");
-const { promptHeader } = require("./prompts");
+const { promptHeader, promptEnd } = require("./prompts");
 
 const name = process.argv[2];
 
@@ -46,6 +44,7 @@ promptHeader();
 
 let spinner;
 
+// MAIN FUNCTION
 (async () => {
   try {
     const deps = await depsPrompt.run();
@@ -59,10 +58,10 @@ let spinner;
         ghActions.lenght > 0
           ? ghActions.map((e) => {
               if (e === "ESLint on PR") {
-                return "ESLint";
+                return "eslint";
               }
               if (e === "Build and push to a 'production' branch") {
-                return "Build";
+                return "build";
               }
               return e;
             })
@@ -93,7 +92,7 @@ let spinner;
     }
 
     spinner.stop();
-    promptEnd();
+    promptEnd(name);
   } catch (error) {
     throw new Error(error);
   }
