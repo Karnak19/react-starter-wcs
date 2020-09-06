@@ -1,7 +1,7 @@
 {
-  "name": "react-start-wcs",
+  "name": "react-starter-wcs",
   "version": "1.0.0",
-  "description": "CLI for react app starter",
+  "description": "bootstrapper CLI for React App with basic deps",
   "main": "index.js",
   "bin": {
     "react-starter-wcs": "index.js"
@@ -12,10 +12,16 @@
   "keywords": [
     "react",
     "cli",
-    "codegen"
+    "codegen",
+    "caprover",
+    "code-generator"
   ],
   "author": "Basile V. <basile64.v@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Karnak19/react-starter-wcs.git"
+  },
   "dependencies": {
     "axios": "^0.20.0",
     "chalk": "^4.1.0",

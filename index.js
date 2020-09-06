@@ -63,7 +63,6 @@ let spinner;
     // });
 
     if (datas.deps.length > 0) {
-      console.log(datas.deps);
       await runCommand("npm", ["install", ...datas.deps], {
         cwd: process.cwd() + "/" + name,
       });
