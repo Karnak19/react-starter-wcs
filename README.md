@@ -1,4 +1,4 @@
-# CREATE-REACT-ROVER
+# REACT-STARTER-WCS
 
 bootstrapper CLI for React App with basic conf for Caprover deployment.
 
