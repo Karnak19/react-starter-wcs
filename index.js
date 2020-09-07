@@ -7,7 +7,13 @@ const axios = require("axios");
 const mkdirp = require("mkdirp");
 
 const runCommand = require("./runCommand");
-const { promptHeader, promptEnd, depsPrompt, caproverPrompt, ghActionsPrompt } = require("./prompts");
+const {
+  promptHeader,
+  promptEnd,
+  depsPrompt,
+  caproverPrompt,
+  ghActionsPrompt,
+} = require("./prompts");
 const downloadGist = require("./downloadGist");
 const dependencies = require("./deps.json");
 
@@ -58,9 +64,9 @@ let spinner;
 
     spinner = ora("Installing dependencies...").start();
 
-    // await runCommand("npm", ["install"], {
-    //   cwd: process.cwd() + "/" + name,
-    // });
+    await runCommand("npm", ["install"], {
+      cwd: process.cwd() + "/" + name,
+    });
 
     if (datas.deps.length > 0) {
       await runCommand("npm", ["install", ...datas.deps], {
@@ -70,7 +76,9 @@ let spinner;
 
     if (datas.caprover) {
       // Download Caprover files gist
-      const gists = await downloadGist("https://api.github.com/users/Karnak19/gists", [dependencies.caprover.id]);
+      const gists = await downloadGist("https://api.github.com/users/Karnak19/gists", [
+        dependencies.caprover.id,
+      ]);
 
       const files = gists.flatMap((gist) => {
         return Object.values(gist).map((val) => {
@@ -123,8 +131,8 @@ let spinner;
     spinner.stop();
     promptEnd(name);
   } catch (error) {
-    spinner.stop();
-    promptEnd(name);
+    // spinner.stop();
+    // promptEnd(name);
     console.error(error);
   }
 })();
