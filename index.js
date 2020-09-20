@@ -61,6 +61,7 @@ let spinner;
 
     await runCommand("git", ["clone", repoURL, name]);
     await runCommand("rm", ["-rf", `${name}/.git`]);
+    await runCommand("git", ["init", `${name}`]);
 
     spinner = ora("Installing dependencies...").start();
 
