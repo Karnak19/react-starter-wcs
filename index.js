@@ -5,6 +5,7 @@ const clear = require("clear");
 const ora = require("ora");
 const axios = require("axios");
 const mkdirp = require("mkdirp");
+const chalk = require("chalk");
 
 const runCommand = require("./runCommand");
 const {
