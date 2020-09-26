@@ -1,6 +1,15 @@
 {
-  "react-router": { "packages": ["react-router-dom"], "id": "e98ca3712bdaa650ce1cf625aa90e495" },
+  "react-router": {
+    "packages": ["react-router-dom"],
+    "id": "e98ca3712bdaa650ce1cf625aa90e495"
+  },
   "redux": { "packages": ["redux", "react-redux"], "id": "" },
+  "material-ui": { "packages": ["@material-ui/core"], "id": "" },
+  "semantic-ui": {
+    "packages": ["semantic-ui-react", "semantic-ui-css"],
+    "id": ""
+  },
+  "reactstrap": { "packages": ["reactstrap", "bootstrap"], "id": "" },
   "recoil": { "packages": ["recoil"], "id": "" },
   "prop-types": { "packages": ["prop-types"], "id": "" },
   "eslint": { "id": "e8cd4adf058f6354a245111a59f346b9" },
