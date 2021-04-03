@@ -2,7 +2,7 @@
 
 bootstrapper CLI for React App with basic conf for Caprover deployment.
 
-It uses [Parcel](https://parceljs.org/) as bundler
+It uses [ViteJS](https://vitejs.dev/) ⚡️
 
 ## Getting started :pushpin:
 
