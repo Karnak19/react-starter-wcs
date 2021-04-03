@@ -43,8 +43,6 @@ let spinner;
     const caprover = await caproverPrompt.run();
     // const ghActions = await ghActionsPrompt.run();
 
-    console.log(deps);
-
     const datas = {
       deps: deps.flatMap((dep) =>
         dependencies[dep].packages ? dependencies[dep].packages : null,
