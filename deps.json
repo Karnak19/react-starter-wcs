@@ -9,6 +9,10 @@
     "packages": ["semantic-ui-react", "semantic-ui-css"],
     "id": ""
   },
+  "tailwindcss": {
+    "packages": ["tailwindcss@latest", "postcss@latest", "autoprefixer@latest"],
+    "id": "f57e116e1a93860bf587670ecea32d9c"
+  },
   "reactstrap": { "packages": ["reactstrap", "bootstrap"], "id": "" },
   "recoil": { "packages": ["recoil"], "id": "" },
   "prop-types": { "packages": ["prop-types"], "id": "" },

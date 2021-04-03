@@ -41,25 +41,27 @@ let spinner;
   try {
     const deps = await depsPrompt.run();
     const caprover = await caproverPrompt.run();
-    const ghActions = await ghActionsPrompt.run();
+    // const ghActions = await ghActionsPrompt.run();
+
+    console.log(deps);
 
     const datas = {
       deps: deps.flatMap((dep) =>
         dependencies[dep].packages ? dependencies[dep].packages : null,
       ),
       caprover: !!caprover[0],
-      ghActions:
-        ghActions.length > 0
-          ? ghActions.map((e) => {
-              if (e === 'ESLint on PR') {
-                return 'eslint';
-              }
-              if (e === "Build and push to a 'production' branch") {
-                return 'build';
-              }
-              return e;
-            })
-          : false,
+      // ghActions:
+      //   ghActions.length > 0
+      //     ? ghActions.map((e) => {
+      //         if (e === 'ESLint on PR') {
+      //           return 'eslint';
+      //         }
+      //         if (e === "Build and push to a 'production' branch") {
+      //           return 'build';
+      //         }
+      //         return e;
+      //       })
+      //     : false,
     };
 
     await runCommand('git', ['clone', repoURL, name]);
@@ -75,6 +77,42 @@ let spinner;
     if (datas.deps.length > 0) {
       await runCommand('npm', ['install', ...datas.deps], {
         cwd: `${process.cwd()}/${name}`,
+      });
+    }
+
+    if (datas.deps.includes('tailwindcss@latest')) {
+      const gist = await downloadGist(
+        'https://api.github.com/users/Karnak19/gists',
+        [dependencies.tailwindcss.id],
+      );
+
+      const files = gist.flatMap((gist) =>
+        Object.values(gist).map((val) => ({
+          promise: axios.get(val.raw_url),
+        })),
+      );
+
+      const res = await Promise.all(files.map((f) => f.promise));
+
+      res.forEach((f) => {
+        if (typeof f.data === 'object') {
+          // eslint-disable-next-line no-param-reassign
+          f.data = JSON.stringify(f.data);
+        }
+        const filename = f.request.path.split('/')[5];
+
+        const isfileNameCss = filename.includes('.css')
+          ? `src/${filename}`
+          : filename;
+        console.log(isfileNameCss);
+
+        fs.writeFile(
+          `${process.cwd()}/${name}/${isfileNameCss}`,
+          f.data,
+          (err) => {
+            if (err) throw err;
+          },
+        );
       });
     }
 

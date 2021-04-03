@@ -37,6 +37,7 @@ const depsPrompt = new Prompt({
     'material-ui',
     'semantic-ui',
     'reactstrap',
+    'tailwindcss',
   ],
 });
 
