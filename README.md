@@ -9,7 +9,7 @@ It uses [Parcel](https://parceljs.org/) as bundler
 You can install it globally OR use npx instead
 
 ```bash
-npx create-react-rover my-fresh-app
+npx react-starter-wcs my-fresh-app
 
 cd my-fresh-app
 
@@ -31,6 +31,8 @@ Those are a Nginx config file, a Dockerfile and a `captain-definition` (needed f
 For CI/CD with Github Actions, see [below](#build-and-push-to-production-branch).
 
 ## GitHub Actions :pushpin:
+
+<span style="color:red">_THESE ARE TEMPORARLY DISABLED !_</span>
 
 Those create files for automate different actions, [give an eye here](https://github.com/features/actions).
 
