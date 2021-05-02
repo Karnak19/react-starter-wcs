@@ -30,6 +30,8 @@ const depsPrompt = new Prompt({
   message:
     'Do you want any third-party libraries ? \n(press space to choose, enter to confirm)\n',
   choices: [
+    'tailwindcss',
+    'headless-ui',
     'react-router',
     'redux',
     'recoil',
@@ -37,7 +39,6 @@ const depsPrompt = new Prompt({
     'material-ui',
     'semantic-ui',
     'reactstrap',
-    'tailwindcss',
   ],
 });
 

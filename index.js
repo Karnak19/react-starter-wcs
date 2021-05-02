@@ -78,6 +78,10 @@ let spinner;
       });
     }
 
+    await runCommand('npx', ['husky', 'install'], {
+      cwd: `${process.cwd()}/${name}`,
+    });
+
     if (datas.deps.includes('tailwindcss@latest')) {
       const gist = await downloadGist(
         'https://api.github.com/users/Karnak19/gists',
@@ -102,7 +106,6 @@ let spinner;
         const isfileNameCss = filename.includes('.css')
           ? `src/${filename}`
           : filename;
-        console.log(isfileNameCss);
 
         fs.writeFile(
           `${process.cwd()}/${name}/${isfileNameCss}`,
