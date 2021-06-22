@@ -1,5 +1,7 @@
 #! /usr/bin/env node
 
+// "build": { "id": "0e643f46dd613b9e5af608d2d299d71a" },
+
 const fs = require('fs');
 const clear = require('clear');
 const ora = require('ora');
@@ -41,25 +43,25 @@ let spinner;
   try {
     const deps = await depsPrompt.run();
     const caprover = await caproverPrompt.run();
-    // const ghActions = await ghActionsPrompt.run();
+    const ghActions = await ghActionsPrompt.run();
 
     const datas = {
       deps: deps.flatMap((dep) =>
         dependencies[dep].packages ? dependencies[dep].packages : null,
       ),
       caprover: !!caprover[0],
-      // ghActions:
-      //   ghActions.length > 0
-      //     ? ghActions.map((e) => {
-      //         if (e === 'ESLint on PR') {
-      //           return 'eslint';
-      //         }
-      //         if (e === "Build and push to a 'production' branch") {
-      //           return 'build';
-      //         }
-      //         return e;
-      //       })
-      //     : false,
+      ghActions:
+        ghActions.length > 0
+          ? ghActions.map((e) => {
+              if (e === 'ESLint on PR') {
+                return 'eslint';
+              }
+              if (e === "Build and push to a 'production' branch") {
+                return 'build';
+              }
+              return e;
+            })
+          : false,
     };
 
     await runCommand('git', ['clone', repoURL, name]);

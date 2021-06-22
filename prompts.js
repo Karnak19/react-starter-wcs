@@ -52,7 +52,10 @@ const caproverPrompt = new Prompt({
 const ghActionsPrompt = new Prompt({
   name: 'actions',
   message: 'Do you want any pre-configured Github Actions ?',
-  choices: ['ESLint on PR', "Build and push to a 'production' branch"],
+  choices: [
+    'ESLint on PR',
+    // "Build and push to a 'production' branch"
+  ],
 });
 
 module.exports = {
