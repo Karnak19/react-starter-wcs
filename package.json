@@ -1,6 +1,6 @@
 {
   "name": "react-starter-wcs",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "bootstrapper CLI for React App with basic deps",
   "main": "index.js",
   "bin": {
