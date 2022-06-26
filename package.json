@@ -1,6 +1,6 @@
 {
   "name": "react-starter-wcs",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "bootstrapper CLI for React App with basic deps",
   "main": "index.js",
   "bin": {
@@ -23,17 +23,17 @@
     "url": "https://github.com/Karnak19/react-starter-wcs.git"
   },
   "dependencies": {
-    "axios": "^0.20.0",
-    "chalk": "^4.1.0",
+    "axios": "^0.27.2",
+    "chalk": "^5.0.1",
     "clear": "^0.1.0",
     "figlet": "^1.5.0",
     "mkdirp": "^1.0.4",
-    "ora": "^5.0.0",
+    "ora": "^6.1.1",
     "prompt-checkbox": "^2.2.0"
   },
   "devDependencies": {
-    "eslint": "^7.9.0",
-    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint": "^8.18.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.22.0"
   }
 }
